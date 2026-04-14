@@ -18,9 +18,6 @@ env/
 # Output — screenshots and generated PDFs
 screenshots/
 
-# Book library configs (may contain credentials)
-libraries/
-
 # macOS
 .DS_Store
 .AppleDouble
@@ -41,4 +38,5 @@ libraries/
 # Playwright browser binaries cache
 playwright/.local-browsers/
 
-libraries/all_books.json libraries/two_books.json
+libraries/all_books.json
+libraries/two_books.json
