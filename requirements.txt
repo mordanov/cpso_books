@@ -1,0 +1,4 @@
+playwright
+Pillow
+img2pdf
+

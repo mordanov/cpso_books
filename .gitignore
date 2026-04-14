@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+*.spec
+
+# Virtual environment
+venv/
+.venv/
+env/
+.env/
+
+# Output — screenshots and generated PDFs
+screenshots/
+
+# Book library configs (may contain credentials)
+libraries/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Playwright browser binaries cache
+playwright/.local-browsers/
+
+libraries/all_books.json libraries/two_books.json
