@@ -51,7 +51,7 @@ python3 screenshot_tool.py \
 
 ```bash
 python3 screenshot_tool.py \
-  --books-config libraries/all_books.json
+  --books-config libraries/example.json
 ```
 
 All common flags (`--headless`, `--delay`, etc.) work in both modes.
@@ -93,7 +93,7 @@ All common flags (`--headless`, `--delay`, etc.) work in both modes.
 - `username` and `password` — credentials for `edpalm-exam.online`
 - `books` — dictionary where keys are textbook IDs (strings) and values are human-readable titles (informational only; the actual PDF filename is extracted from the page DOM)
 
-See [`libraries/all_books.json`](libraries/all_books.json) for a full example with 200+ books.
+See [`libraries/example.json`](libraries/example.json) for a full example with 200+ books.
 
 ---
 
@@ -135,7 +135,7 @@ For each book the tool performs these steps:
 
 ```bash
 python3 screenshot_tool.py \
-  --books-config libraries/all_books.json \
+  --books-config libraries/example.json \
   --headless \
   --keep-png \
   --delay 2.0
