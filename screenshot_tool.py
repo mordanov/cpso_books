@@ -8,6 +8,7 @@ import sys
 import argparse
 import json
 import re
+import subprocess
 import time
 from pathlib import Path
 from typing import cast
@@ -135,6 +136,32 @@ def load_books_config(config_path: Path):
             raise RuntimeError(f"Некорректный ключ книги в books: {key!r}. Ожидается число.")
 
     return username, password, sorted(set(book_ids))
+
+
+def start_sleep_prevention():
+    """Запускает caffeinate на macOS, чтобы не допустить сон/блокировку во время цикла."""
+    if sys.platform != "darwin":
+        return None
+
+    try:
+        # -d: display sleep off, -i: idle sleep off, -m: disk sleep off, -u/-s: user/system active
+        return subprocess.Popen(["caffeinate", "-dimsu"])
+    except FileNotFoundError:
+        print("⚠️  'caffeinate' не найден. Защита от сна не включена.")
+        return None
+
+
+def stop_sleep_prevention(process):
+    """Останавливает ранее запущенный процесс caffeinate."""
+    if not process:
+        return
+
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            process.kill()
 
 
 def login(page, username: str, password: str):
@@ -422,6 +449,10 @@ def main():
         username, password, book_ids = args.username, args.password, [args.book]
 
     with sync_playwright() as p:
+        sleep_guard = start_sleep_prevention()
+        if sleep_guard:
+            print("🟢 Защита от сна включена (caffeinate).")
+
         browser = p.chromium.launch(
             headless=args.headless, args=["--no-sandbox", "--disable-setuid-sandbox"]
         )
@@ -463,6 +494,9 @@ def main():
             print("\n⚠️  Прервано пользователем.")
         finally:
             browser.close()
+            stop_sleep_prevention(sleep_guard)
+            if sleep_guard:
+                print("⚪ Защита от сна отключена.")
 
 
 
